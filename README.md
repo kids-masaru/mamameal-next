@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mamameal Next (Vercel + Gemini)
 
-## Getting Started
+This is the modernized version of the Mamameal PDF conversion tool, designed for Vercel deployment and using Google Gemini API for high-accuracy data extraction.
 
-First, run the development server:
+## Features
+- **Frontend**: Next.js (React) with Tailwind CSS.
+- **Backend**: Python Serverless Functions (Flask) on Vercel.
+- **AI**: Google Gemini API (`gemini-1.5-pro`) for PDF analysis.
+- **UI**: Modern drag-and-drop interface with custom SVG icons.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Prerequisites
+- Node.js
+- Python 3.9+
+- Vercel CLI (`npm i -g vercel`)
+- Google Gemini API Key
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup & Deployment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1.  **Install Dependencies**
+    ```bash
+    cd mamameal-next
+    npm install
+    ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2.  **Local Development**
+    - You need to run both Next.js and the Python API.
+    - It's recommended to use Vercel CLI for local dev to handle the Python serverless functions.
+    ```bash
+    vercel dev
+    ```
+    *Note: You must set `GOOGLE_API_KEY` in your `.env` file or Vercel project settings.*
 
-## Learn More
+3.  **Deploy to Vercel**
+    ```bash
+    vercel deploy
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+4.  **Environment Variables**
+    - Go to your Vercel Project Settings > Environment Variables.
+    - Add `GOOGLE_API_KEY` with your Gemini API key.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Structure
+- `app/`: Next.js Frontend code.
+- `api/`: Python Backend code (`index.py`).
+- `api/assets/`: Excel templates and Master CSV files.
+- `components/`: React components (Icons, etc.).
