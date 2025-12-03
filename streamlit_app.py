@@ -171,7 +171,7 @@ with st.sidebar:
     model_name = st.selectbox(
         "使用モデル (シール作成用)",
         ["gemini-2.5-pro", "gemini-2.5-flash", "gemini-2.0-flash"],
-        index=0,
+        index=1,
         help="gemini-2.5-pro: 高精度ですが時間がかかります\ngemini-2.5-flash: 高速ですが精度が落ちる場合があります"
     )
 
