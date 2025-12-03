@@ -20,15 +20,16 @@ This is the modernized version of the Mamameal PDF conversion tool, designed for
     ```bash
     cd mamameal-next
     npm install
+    pip install -r requirements.txt
     ```
 
 2.  **Local Development**
-    - You need to run both Next.js and the Python API.
-    - It's recommended to use Vercel CLI for local dev to handle the Python serverless functions.
+    - Use the provided script to start both Backend and Frontend.
     ```bash
-    vercel dev
+    # PowerShell
+    .\run_dev.bat
     ```
-    *Note: You must set `GOOGLE_API_KEY` in your `.env` file or Vercel project settings.*
+    *Note: You must set `GOOGLE_API_KEY` in your `.env` file.*
 
 3.  **Deploy to Vercel**
     ```bash

@@ -40,3 +40,28 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+env/
+
+# Streamlit
+.streamlit/
+
+# Test and debug files
+*.log
+test_*.py
+*_test.py
+debug.log
+error_log.txt
+success_log.txt
+output.txt
+gemini_test_*.txt
+seal_api_test_output.txt
+models.txt
