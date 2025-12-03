@@ -53,6 +53,7 @@ env/
 
 # Streamlit
 .streamlit/
+!.streamlit/config.toml
 
 # Test and debug files
 *.log
