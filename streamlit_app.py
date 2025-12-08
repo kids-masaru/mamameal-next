@@ -22,6 +22,11 @@ load_dotenv()
 # Configure page
 icon_path = os.path.join("static", "icons", "android-chrome-192.png")
 page_icon = icon_path if os.path.exists(icon_path) else "🍱"
+try:
+    if not os.path.exists(icon_path):
+        page_icon = "🍱"
+except:
+    page_icon = "🍱"
 
 st.set_page_config(
     page_title="ママミール業務ツール",
@@ -109,6 +114,7 @@ ICON_MAIN = """<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" vi
 
 # --- Utility Functions ---
 
+@st.cache_data
 def load_master_csv(base_path, file_pattern):
     """Load master CSV from assets directory."""
     search_path = os.path.join(base_path, f'*{file_pattern}*.csv')
@@ -161,12 +167,20 @@ st.markdown(f'<div class="main-header">{ICON_MAIN} ママミール業務ツー�
 # Sidebar
 with st.sidebar:
     st.header("設定")
-    api_key = os.environ.get("GOOGLE_API_KEY")
+    # Streamlit Cloud uses st.secrets, local uses .env
+    api_key = None
+    try:
+        # Try Streamlit Cloud secrets first
+        api_key = st.secrets.get("GOOGLE_API_KEY")
+    except:
+        # Fall back to environment variable
+        api_key = os.environ.get("GOOGLE_API_KEY")
+    
     if api_key:
         st.success("API Key: 設定済み")
         genai.configure(api_key=api_key)
     else:
-        st.error("API Key: 未設定 (.envを確認してください)")
+        st.error("API Key: 未設定 (Streamlit Cloudの場合はSecretsを、ローカルの場合は.envを確認してください)")
     
     model_name = st.selectbox(
         "使用モデル (シール作成用)",
