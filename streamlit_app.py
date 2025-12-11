@@ -1,14 +1,35 @@
 import streamlit as st
 import os
+import sys
 import json
 import base64
 import io
+import logging
+from pathlib import Path
+
+# ========================================================
+# CRITICAL: Suppress pdfminer logging BEFORE any imports
+# This must happen at the very start to prevent
+# excessive log output that can hang Streamlit Cloud
+# ========================================================
+logging.getLogger('pdfminer').setLevel(logging.ERROR)
+logging.getLogger('pdfplumber').setLevel(logging.ERROR)
+logging.getLogger('pdfminer.pdfpage').setLevel(logging.ERROR)
+logging.getLogger('pdfminer.pdfinterp').setLevel(logging.ERROR)
+logging.getLogger('pdfminer.converter').setLevel(logging.ERROR)
+logging.getLogger('pdfminer.pdfdocument').setLevel(logging.ERROR)
+
 import pandas as pd
 import google.generativeai as genai
 from openpyxl import load_workbook, Workbook
 from dotenv import load_dotenv
 import unicodedata
 import glob
+
+# Robust path resolution for Streamlit Cloud compatibility
+APP_DIR = Path(__file__).parent.resolve()
+sys.path.insert(0, str(APP_DIR))
+
 from api.pdf_utils import (
     safe_write_df, pdf_to_excel_data_for_paste_sheet, extract_table_from_pdf_for_bento,
     find_correct_anchor_for_bento, extract_bento_range_for_bento, match_bento_data, 
@@ -189,9 +210,10 @@ with st.sidebar:
         help="gemini-2.5-pro: 高精度ですが時間がかかります\ngemini-2.5-flash: 高速ですが精度が落ちる場合があります"
     )
 
-ASSETS_DIR = os.path.join(os.path.dirname(__file__), 'api', 'assets')
-if not os.path.exists(ASSETS_DIR):
-    os.makedirs(ASSETS_DIR)
+ASSETS_DIR = APP_DIR / 'api' / 'assets'
+if not ASSETS_DIR.exists():
+    ASSETS_DIR.mkdir(parents=True, exist_ok=True)
+ASSETS_DIR = str(ASSETS_DIR)  # Convert to string for compatibility with glob and other functions
 
 # Initialize Session State
 if 'main_process_done' not in st.session_state:
