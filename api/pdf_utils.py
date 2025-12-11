@@ -1,5 +1,19 @@
 # pdf_utils.py
 
+# ========================================================
+# CRITICAL: Suppress pdfminer logging BEFORE pdfplumber import
+# This prevents excessive logging that hangs Streamlit Cloud
+# ========================================================
+import logging
+logging.getLogger('pdfminer').setLevel(logging.ERROR)
+logging.getLogger('pdfplumber').setLevel(logging.ERROR)
+logging.getLogger('pdfminer.pdfpage').setLevel(logging.ERROR)
+logging.getLogger('pdfminer.pdfinterp').setLevel(logging.ERROR)
+logging.getLogger('pdfminer.converter').setLevel(logging.ERROR)
+logging.getLogger('pdfminer.pdfdocument').setLevel(logging.ERROR)
+logging.getLogger('pdfminer.psparser').setLevel(logging.ERROR)
+logging.getLogger('pdfminer.pdfparser').setLevel(logging.ERROR)
+
 import pandas as pd
 import pdfplumber
 import re
