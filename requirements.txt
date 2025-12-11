@@ -1,7 +1,1 @@
 streamlit==1.40.0
-google-generativeai>=0.8.0
-openpyxl==3.1.2
-pandas==2.2.0
-python-dotenv==1.0.0
-pdfplumber
-pdfminer.six
