@@ -1,9 +1,0 @@
-=== Starting Seal Processing Test ===
-Traceback (most recent call last):
-  File "C:\Users\700289\Downloads\Python\mamameal-next\test_seal.py", line 133, in <module>
-    traceback.print_exc()
-    ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\700289\Downloads\Python\mamameal-next\test_seal.py", line 21, in test_seal_processing
-    print("\u2705 API Key found")
-    ~~~~~^^^^^^^^^^^^^^^^^^^^
-UnicodeEncodeError: 'cp932' codec can't encode character '\u2705' in position 0: illegal multibyte sequence
