@@ -9,12 +9,29 @@ from openpyxl import load_workbook, Workbook
 from dotenv import load_dotenv
 import unicodedata
 import glob
-from api.pdf_utils import (
-    safe_write_df, pdf_to_excel_data_for_paste_sheet, extract_table_from_pdf_for_bento,
-    find_correct_anchor_for_bento, extract_bento_range_for_bento, match_bento_data, 
-    extract_detailed_client_info_from_pdf, export_detailed_client_data_to_dataframe,
-    paste_dataframe_to_sheet
-)
+
+# Try to import pdf_utils with error handling for Streamlit Cloud
+try:
+    from api.pdf_utils import (
+        safe_write_df, pdf_to_excel_data_for_paste_sheet, extract_table_from_pdf_for_bento,
+        find_correct_anchor_for_bento, extract_bento_range_for_bento, match_bento_data, 
+        extract_detailed_client_info_from_pdf, export_detailed_client_data_to_dataframe,
+        paste_dataframe_to_sheet
+    )
+    PDF_UTILS_AVAILABLE = True
+except Exception as e:
+    PDF_UTILS_AVAILABLE = False
+    PDF_UTILS_ERROR = str(e)
+    # Define dummy functions
+    def safe_write_df(*args, **kwargs): pass
+    def pdf_to_excel_data_for_paste_sheet(*args, **kwargs): return None
+    def extract_table_from_pdf_for_bento(*args, **kwargs): return []
+    def find_correct_anchor_for_bento(*args, **kwargs): return -1
+    def extract_bento_range_for_bento(*args, **kwargs): return []
+    def match_bento_data(*args, **kwargs): return []
+    def extract_detailed_client_info_from_pdf(*args, **kwargs): return []
+    def export_detailed_client_data_to_dataframe(*args, **kwargs): return pd.DataFrame()
+    def paste_dataframe_to_sheet(*args, **kwargs): pass
 
 # Load environment variables
 load_dotenv()
@@ -163,6 +180,13 @@ st.markdown(f'<div class="main-header">{ICON_MAIN} ママミール業務ツー�
 # Sidebar
 with st.sidebar:
     st.header("設定")
+    
+    # Show PDF utils status
+    if PDF_UTILS_AVAILABLE:
+        st.success("PDF処理: 利用可能")
+    else:
+        st.error(f"PDF処理エラー: {PDF_UTILS_ERROR}")
+    
     api_key = os.environ.get("GOOGLE_API_KEY")
     if api_key:
         api_key = api_key.strip()  # Remove any whitespace
